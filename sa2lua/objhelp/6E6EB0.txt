@@ -1,0 +1,17 @@
+This is an invisible object which awards bonus points when you go through it.
+
+X rotation = delay (in frames)
+XYZ scale = size of collision detection
+
+Y rotation:
+0 - No bonus awarded
+1 - 100 points awarded ("Good!")
+2 - 200 points awarded ("Nice!")
+3 - 300 points awarded ("Great!")
+4 - 400 points awarded ("Jammin'!")
+5 - 500 points awarded ("Cool!")
+6 - 600 points awarded ("Radical!")
+7 - 800 points awarded ("Tight!")
+8 - 1000 points awarded ("Awesome!")
+9 - 1500 points awarded ("Extreme!")
+A - 2000 points awarded ("Perfect!")
