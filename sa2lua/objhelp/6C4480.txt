@@ -1,3 +1,0 @@
-This is a spring of the type normally found on the floor.
-
-Y scale = bounce height

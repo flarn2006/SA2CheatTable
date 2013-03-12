@@ -1,3 +1,0 @@
-This is a taller spring, normally bouncing you at an angle.
-
-Y scale = bounce height

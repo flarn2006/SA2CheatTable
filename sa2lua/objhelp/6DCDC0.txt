@@ -1,8 +1,0 @@
-This is a generic switch, found in many levels.
-
-Spawned switches will not work if spawned on top of the player;
-therefore you must spawn switches by replacing an existing object
-(such as a movable cylinder) or duplicating a switch using the
-keyboard controls.
-
-Y Scale = switch ID
