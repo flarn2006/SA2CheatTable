@@ -1,0 +1,15 @@
+This is a standard item box.
+
+X scale = item to give (float)
+
+0 - Speed Shoes
+1 - 5 Rings
+2 - Extra Life
+3 - 10 Rings
+4 - 20 Rings
+5 - Bubble Shield
+6 - Bomb
+7 - First Aid Kit
+8 - Magnetic Shield
+9 - Empty
+10 - Invincibility

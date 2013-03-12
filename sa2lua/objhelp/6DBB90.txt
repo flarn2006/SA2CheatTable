@@ -1,0 +1,12 @@
+This is a giant weight which rises into the air and drops periodically.
+
+Y rotation = actually controls Y rotation
+Z rotation = switch ID
+X scale = actually controls X scale
+Y scale = height of movement
+Z scale = actually controls Z scale
+
+X rotation:
+0 - Normal behavior
+1 - Trap (drops when nearby, then raises)
+2 - Switch-controlled

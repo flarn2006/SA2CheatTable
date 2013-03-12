@@ -1,0 +1,3 @@
+This is a wider spring, about the size of three springs lined up horizontally.
+
+Y scale = bounce height

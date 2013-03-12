@@ -1,0 +1,8 @@
+46F680,LoadObject,-,-,-,-,?,routine,&&name
+46F610,LoadObject2,&&name,-,list,-,-,routine,flags
+73AA70,LoadEmeraldManager,-,-,-,-,-,-,(none)
+442CF0,PlayMusic,-,-,-,-,-,&&song,(none)
+46B110,KillCharacter,-,player,-,-,-,-,(none)
+44C350,LoadTexturePack,-,-,&&name,&&TexList,-,-,(none)
+531B10,SpawnAllChaoInGarden,-,-,-,-,-,-,(none)
+47BD30,LoadLandManager,-,-,-,-,-,-,&&LandTable

@@ -1,0 +1,4 @@
+This is an axle with two rotating spiked balls.
+
+X scale = controls diameter (set to -1 for a single ball)
+Y scale = controls speed of rotation (set to -1 to disable rotation)
