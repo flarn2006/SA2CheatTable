@@ -164,5 +164,13 @@ function FastLoadingBtnClick(sender)
 	end
 end
 
+function FixLvlBoundariesBtnClick(sender)
+	if checkbox_getState(sender) == cbChecked then
+		writeBytes(0x737B50, 0x31, 0xC0, 0xC3)
+	else
+		writeBytes(0x737B50, 0x83, 0xEC, 0x54)
+	end
+end
+
 objLayout = "Default"
 SetObjectLayout()
