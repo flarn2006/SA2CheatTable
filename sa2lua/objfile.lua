@@ -93,4 +93,13 @@ function SaveObjListClick(sender)
 	end
 end
 
+-- CE 6.3 broke this function
+function openDialog_execute(od)
+	if od.execute() then
+		return od.Filename
+	else
+		return nil
+	end
+end
+
 spawnqueue = {}

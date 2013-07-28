@@ -153,4 +153,18 @@ function debugger_onBreakpoint()
 	end
 end
 
+-- Check for the correct version of Cheat Engine
+
+if getCEVersion() < 6.3 then
+	local msg = [[You are currently running Cheat Engine ]]..tostring(getCEVersion())..[[.
+	
+	If you do not upgrade to Cheat Engine 6.3, certain functionality (object list load/save) will not work correctly. If you do not need this functionality, you may disregard this message.
+	
+	Open the Cheat Engine download page now?]]
+	
+	if messageDialog(msg, mtExclamation, mbYes, mbNo) == mrYes then
+		shellExecute("http://www.cheatengine.org/downloads.php")
+	end
+end
+
 str_alloc_addr = nil
