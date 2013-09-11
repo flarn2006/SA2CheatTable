@@ -85,9 +85,20 @@ function LoadObjListClick(sender)
 end
 
 function SaveObjListClick(sender)
-	local file = io.open(openDialog_execute(SpawnedObjList_SaveDlg), "w+")
+	local count
+	local filename = openDialog_execute(SpawnedObjList_SaveDlg)
+	local file
+	if SpawnedObjList_SaveDlg.FilterIndex == 2 then
+		file = io.open(filename, "w+b")
+	else
+		file = io.open(filename, "w+")
+	end
 	if file ~= nil then
-		local count = WriteSpawnedObjListToFile(file)
+		if SpawnedObjList_SaveDlg.FilterIndex == 2 then
+			count = SETWriteFile(file, ol_spawned)
+		else
+			count = WriteSpawnedObjListToFile(file)
+		end
 		file:close()
 		messageDialog("Wrote "..count.." objects", mtInformation, mbOK)
 	end
@@ -103,3 +114,4 @@ function openDialog_execute(od)
 end
 
 spawnqueue = {}
+dofile("sa2lua/setexport.lua")

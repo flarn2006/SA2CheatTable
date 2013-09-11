@@ -16,7 +16,9 @@ Features Overview
   - And more!
 + Teleportation interface that saves locations in levels
 + Interface for viewing and editing the parameters of all loaded level objects
-+ Allows you to spawn *additional* objects into the level, and save them to a file to be loaded later
++ Allows you to spawn additional objects into the level, and save them to a file to be loaded later
+  - Now exports in the game's native SET format, for use with [SETMerge](https://github.com/flarn2006/SETMerge)
+  - This enables the additional objects to easily be added to the game data, making it permanent
 + Play as any character in any level, including in 2-player mode and boss battles
 + Load elements from multiple levels at once, to have (for example) Metal Harbor's water and sky in Meteor Herd
 + Directly call any function in the game's code (for advanced users)

@@ -133,6 +133,26 @@ function ReplaceObjectClick(sender)
 	OCUpdateControls()
 end
 
+function GetStageObjList()
+	local list = {}
+	local objlist = readInteger(0x1DDE268)
+	local count = readInteger(objlist)
+	objlist = readInteger(objlist + 0x04)
+	
+	for i=0,count-1 do
+		local entry = {}
+		entry.name = readInteger(objlist + 0x0C)
+		entry.namestr = readString(entry.name, 64)
+		entry.flags = readBytes(objlist, 1, false)
+		entry.list = readBytes(objlist + 0x01, 1, false)
+		entry.routine = readInteger(objlist + 0x08)
+		table.insert(list, entry)
+		objlist = objlist + 0x10
+	end
+	
+	return list
+end
+
 function PopulateObjListClick(sender)
 	local objlist = readInteger(0x1DDE268)
 	local count = readInteger(objlist)
@@ -143,7 +163,7 @@ function PopulateObjListClick(sender)
 	ol_list = {}
 	ol_routine = {}
 	for i=0,count-1 do
-		local name = readInteger(objlist + 0x0C), 64
+		local name = readInteger(objlist + 0x0C)
 		local flags = readBytes(objlist, 1, false)
 		local list = readBytes(objlist + 0x01, 1, false)
 		local routine = readInteger(objlist + 0x08)
