@@ -23,8 +23,8 @@ function SETFindObjectType(routine, objlist)
 	return nil
 end
 
-function SETWriteEntry(file, addr)
-	local typeid = SETFindObjectType(readInteger(addr + 0x10), GetStageObjList())
+function SETWriteEntry(file, addr, routine)
+	local typeid = SETFindObjectType(routine, GetStageObjList())
 	if typeid == nil then return false end
 	
 	local rx = readInteger(GetObjData1(addr, 0x08))
@@ -58,7 +58,7 @@ function SETWriteFile(file, objects)
 	end
 	SETWriteHeader(file, count)
 	for i,v in ipairs(ol_spawned) do
-		SETWriteEntry(file, v.addr)
+		SETWriteEntry(file, v.addr, v.routine)
 	end
 	return count
 end
