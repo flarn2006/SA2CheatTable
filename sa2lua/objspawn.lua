@@ -276,6 +276,32 @@ function ObjectListDblClick(sender)
 	end
 end
 
+function ToggleCollisionBtnClick(sender)
+	local addr = readInteger(GetObjData1(readInteger(0x1DEA6E0), 0x2C)) + 0x06
+	if readBytes(addr, 1, false) == 0x00 then
+		--Collision is currently off; turn it on
+		writeBytes(addr, 0x02)
+		UpdateCollisionButtonCaption(true)
+	else
+		--Collision is currently on; turn it off
+		writeBytes(addr, 0x00)
+		UpdateCollisionButtonCaption(false)
+	end
+end
+
+function UpdateCollisionButtonCaption(isEnabled)
+	if isEnabled == nil and IsPlayerValid() then
+		local addr = readInteger(GetObjData1(readInteger(0x1DEA6E0), 0x2C)) + 0x06
+		isEnabled = (readBytes(addr, 1, false) ~= 0x00)
+	end
+	
+	if isEnabled then
+		control_setCaption(SpawnObjectDlg_ToggleCollision, "Collision ON")
+	else
+		control_setCaption(SpawnObjectDlg_ToggleCollision, "Collision OFF")
+	end
+end
+
 dofile("sa2lua/spawnedlist.lua")
 dofile("sa2lua/objfile.lua")
 

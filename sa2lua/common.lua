@@ -123,6 +123,7 @@ function UpdateTimer(sender)
 	end
 	CheckForSpawnedObject()
 	CheckForFCReturnValue()
+	UpdateCollisionButtonCaption()
 	if controls ~= nil then
 		if Bitwise.bw_and(controls, 0x08080000) then
 			local addr = readInteger(readInteger(0x1DEA6E0))
@@ -131,6 +132,11 @@ function UpdateTimer(sender)
 			end
 		end
 	end
+end
+
+function IsPlayerValid()
+	local addr = readInteger(readInteger(0x1DEA6E0))
+	return (addr ~= nil)
 end
 
 function readWord(addr)
