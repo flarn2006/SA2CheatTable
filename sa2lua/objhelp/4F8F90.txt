@@ -1,0 +1,12 @@
+This is a GUN Hornet (annoying homing bomb) robot.
+
+X Rotation = Laser trail length
+Y Rotation = Delay between laser shots
+
+X Scale = Type
+0 - 3 bomb variant
+1 - 6 bomb variant
+2 - 8 bomb variant
+3 - 3 laser variant
+
+Y Scale = Laser speed

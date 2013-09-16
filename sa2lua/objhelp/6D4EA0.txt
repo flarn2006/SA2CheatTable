@@ -1,5 +1,7 @@
 This is a rocket which transports you to another part of the level.
 
+X rotation = switch ID (0 starts enabled)
+
 X scale = X coordinate of destination (float)
 Y scale = Y coordinate of destination (float)
 Z scale = Z coordinate of destination (float)

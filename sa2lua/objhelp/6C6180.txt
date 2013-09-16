@@ -1,0 +1,5 @@
+This is a group of rings that automatically spawns in a circle.
+
+X scale = Radius of circle
+Y scale = Height of arc (0 for line)
+Z scale = Number of rings

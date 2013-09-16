@@ -1,0 +1,5 @@
+This is a group of rings that automatically spawn in a line or an arc.
+
+X scale = Distance between rings
+Y scale = Height of arc (0 for line)
+Z scale = Number of rings

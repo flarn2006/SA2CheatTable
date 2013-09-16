@@ -1,0 +1,11 @@
+This is a GUN Hunter (biped) robot.
+
+X Scale = Type
+0 - Basic Hunter
+1 - Hovering Hunter
+2 - Laser Hunter
+3 - Hovering Laser Hunter
+4 - Freeze Hunter
+5 - Shield Hunter
+
+Y Scale = Projectile Speed
