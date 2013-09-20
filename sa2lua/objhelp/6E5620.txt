@@ -1,4 +1,6 @@
 This is a pulley (one of those handles that takes you up and down.)
 
+X rotation = set to 1 to start at bottom, go up, and return
+
 X scale = distance to go down (float, multiples of 20)
 Y scale = distance to start at (float, 0-2)

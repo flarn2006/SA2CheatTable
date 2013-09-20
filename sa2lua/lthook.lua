@@ -65,4 +65,4 @@ LTHHookEnabled = false
 LTHReplaceTexFile = false
 LTHMakeNonSolid = false
 LTHReplaceModel = false
-LTHPause = false;
+LTHPause = false
