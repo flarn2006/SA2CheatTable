@@ -1,16 +1,34 @@
 function EnableLineDrawingIfNecessary()
+	if trace then print("EnableLineDrawingIfNecessary called") end
 	if readInteger(hookcmd) == nil then
+		if trace then print("EnableLineDrawingIfNecessary enabling object spawning") end
 		EnableObjectSpawning()
 	end
-	if readInteger(readInteger(linedraw_objaddr)) == nil then
+	if not IsLineDrawingEnabled() then
+		if trace then print("EnableLineDrawingIfNecessary enabling line drawing") end
 		linecodeaddr = allocateSharedMemory("DrawLine3DCode", 4096)
 		linelistaddr = allocateSharedMemory("DrawLine3DList", 65536)
 		readRegionFromFile("sa2lua/linedraw.bin", linecodeaddr)
-		SpawnObject(linecodeaddr, "$Lua$DrawLine3D", 1, 2, true, 0,0,0,0,0,0,0,0,0,0)
+		SpawnObject(linecodeaddr, "$Lua$DrawLine3D", 1, 1, true, 0,0,0,0,0,0,0,0,0,0)
+		waiting_for_linedraw_obj = true
+	end
+end
+
+function IsLineDrawingEnabled()
+	if linecodeaddr == nil or linelistaddr == nil then
+		waiting_for_linedraw_obj = false
+		return false
+	end
+	if waiting_for_linedraw_obj then return true end
+	if readString(readInteger(linedraw_objaddr + 0x44), 64) == "$Lua$DrawLine3D" then
+		return readInteger(linedraw_objaddr) ~= linedraw_objaddr
+	else
+		return false
 	end
 end
 
 function UpdateLineList()
+	if trace then print("UpdateLineList called") end
 	EnableLineDrawingIfNecessary()
 	local count = 0
 	local addr = linelistaddr+4
@@ -29,7 +47,10 @@ function UpdateLineList()
 end
 
 function DrawLineObjectCallback(addr)
+	if trace then print("DrawLineObjectCallback called") end
 	writeInteger(readInteger(addr + 0x38), linelistaddr)
+	linedraw_objaddr = addr
+	waiting_for_linedraw_obj = false
 end
 
 function DrawLine3D(identifier, x1, y1, z1, x2, y2, z2, color)
@@ -92,3 +113,4 @@ end
 linelist = {}
 linelistaddr = nil
 linecodeaddr = nil
+waiting_for_linedraw_obj = false

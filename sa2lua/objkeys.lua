@@ -6,7 +6,8 @@ W/S - Move on Z axis
 Q/E - Rotate around Y axis
 Z - Duplicate object
 X - Align to X/Z axes
-C - Same as "Spawn Object" button]]
+C - Same as "Spawn Object" button
+O/P - Select objects]]
 
 function ObjManipKeysToggleClick(sender)
 	OMKActive = (checkbox_getState(sender) == cbChecked)
@@ -22,6 +23,9 @@ function ObjManipKeysToggleClick(sender)
 		OMKHotkeyZ = createHotkey(OMKKeyHandler, VK_Z)
 		OMKHotkeyX = createHotkey(OMKKeyHandler, VK_X)
 		OMKHotkeyC = createHotkey(OMKKeyHandler, VK_C)
+		OMKHotkeyO = createHotkey(OMKKeyHandler, VK_O)
+		OMKHotkeyP = createHotkey(OMKKeyHandler, VK_P)
+		EnableLineDrawingIfNecessary()
 	else
 		object_destroy(OMKHotkeyA)
 		object_destroy(OMKHotkeyD)
@@ -34,6 +38,28 @@ function ObjManipKeysToggleClick(sender)
 		object_destroy(OMKHotkeyZ)
 		object_destroy(OMKHotkeyX)
 		object_destroy(OMKHotkeyC)
+		object_destroy(OMKHotkeyO)
+		object_destroy(OMKHotkeyP)
+	end
+end
+
+function UpdateObjectSelCube()
+	if EnableObjectSpawning ~= nil and readInteger(linedraw_objaddr) ~= nil then
+		if OMKActive and readFloat(GetObjData1(objaddr, 0x14)) ~= nil then
+			local radius = 10
+			local x = readFloat(GetObjData1(objaddr, 0x14))
+			local y = readFloat(GetObjData1(objaddr, 0x18))
+			local z = readFloat(GetObjData1(objaddr, 0x1C))
+			local x1 = x - 10
+			local y1 = y - 10
+			local z1 = z - 10
+			local x2 = x + 10
+			local y2 = y + 10
+			local z2 = z + 10
+			DrawCube3D("SelectedObject", x1, y1, z1, x2, y2, z2, 0xFF00FF00)
+		else
+			RemoveCube("SelectedObject")
+		end
 	end
 end
 
@@ -47,6 +73,7 @@ function OMKKeyHandler(sender)
 	local y = readFloat(GetObjData1(objaddr, 0x18))
 	local z = readFloat(GetObjData1(objaddr, 0x1C))
 	local r = readInteger(GetObjData1(objaddr, 0x0C))
+	local curobj = objaddr
 	
 	if OMKActive and x ~= nil then
 		    if isKeyPressed(VK_A) then x = x + inc
@@ -63,13 +90,17 @@ function OMKKeyHandler(sender)
 			z = 4 * round(z/4, 0)
 		elseif isKeyPressed(VK_C) then
 			SpawnObjectClick(SpawnObjectDlg_SpawnObject) --emulate button click
+		elseif isKeyPressed(VK_O) then PrevObject() UpdateObjectSelCube()
+		elseif isKeyPressed(VK_P) then NextObject() UpdateObjectSelCube()
 		end
 	end
 	
-	writeFloat(GetObjData1(objaddr, 0x14), x)
-	writeFloat(GetObjData1(objaddr, 0x18), y)
-	writeFloat(GetObjData1(objaddr, 0x1C), z)
-	writeInteger(GetObjData1(objaddr, 0x0C), r)
+	if curobj == objaddr then
+		writeFloat(GetObjData1(objaddr, 0x14), x)
+		writeFloat(GetObjData1(objaddr, 0x18), y)
+		writeFloat(GetObjData1(objaddr, 0x1C), z)
+		writeInteger(GetObjData1(objaddr, 0x0C), r)
+	end
 end
 
 function OMKDuplicateObject()

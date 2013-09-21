@@ -52,6 +52,7 @@ function OCUpdateControls()
 		control_setCaption(AdvObjParams_ObjDispRt, num2hex(temp))
 		temp = readBytes(GetObjData1(objaddr, 0), 1, false)
 		control_setCaption(AdvObjParams_ObjAction, num2hex(temp))
+		if UpdateObjectSelCube ~= nil then UpdateObjectSelCube() end
 	else
 		control_setCaption(ObjectChain_Address, "Click Reset")
 		control_setCaption(ObjectChain_ObjectName, "")
