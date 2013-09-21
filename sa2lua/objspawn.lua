@@ -205,11 +205,17 @@ function CheckForSpawnedObject()
 		writeInteger(hookcmd, 0)
 		local flags = readBytes(hookcmd + 0x0C, 1, false)
 		local list = readInteger(hookcmd + 0x0D)
-		objaddr = readInteger(hookcmd + 0x04)
-		OCUpdateControls()
-		UpdateRemote()
-		OLAddObject(objaddr, sp_routine_storage, flags, list)
-		SpawnNextObject()
+		local addr = readInteger(hookcmd + 0x04)
+		local objname = readString(readInteger(addr + 0x44), 64)
+		if objname:sub(1,5) == "$Lua$" then
+			object_callbacks[objname:sub(6)](addr)
+		else
+			objaddr = addr
+			OCUpdateControls()
+			UpdateRemote()
+			OLAddObject(objaddr, sp_routine_storage, flags, list)
+			SpawnNextObject()
+		end
 	end
 end
 
@@ -304,6 +310,8 @@ end
 
 dofile("sa2lua/spawnedlist.lua")
 dofile("sa2lua/objfile.lua")
+
+object_callbacks = {DrawLine3D = DrawLineObjectCallback}
 
 hookcmd = nil
 objname = 0

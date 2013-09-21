@@ -8661,6 +8661,7 @@ dofile("sa2lua/teleport.lua")
 
 -- Functions for object chain dialog
 
+dofile("sa2lua/linedraw.lua")
 dofile("sa2lua/objchain.lua")
 dofile("sa2lua/objspawn.lua")
 dofile("sa2lua/remote.lua")
