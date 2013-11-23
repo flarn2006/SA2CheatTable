@@ -64,6 +64,23 @@ end
 
 function SpawnNextObject()
 	if #spawnqueue > 0 then
+		if spawnqueueRotationMode > 0 then
+			local angle_bams = spawnqueueAngleBAMS
+			local angle = angle_bams * (math.pi / 0x8000)
+			angle = -angle
+			local x = spawnqueue[1].px
+			local z = spawnqueue[1].pz
+			spawnqueue[1].px = x*math.cos(angle) - z*math.sin(angle)
+			spawnqueue[1].pz = x*math.sin(angle) + z*math.cos(angle)
+			if spawnqueueRotationMode == 1 then
+				spawnqueue[1].ry = (spawnqueue[1].ry + angle_bams) % 0x100000000
+			end
+		end
+		
+		spawnqueue[1].px = spawnqueue[1].px + spawnqueueOffsetX
+		spawnqueue[1].py = spawnqueue[1].py + spawnqueueOffsetY
+		spawnqueue[1].pz = spawnqueue[1].pz + spawnqueueOffsetZ
+		
 		SpawnFromObjData(spawnqueue[1])
 		table.remove(spawnqueue, 1)
 	end
@@ -80,6 +97,21 @@ function LoadObjListClick(sender)
 	if file ~= nil then
 		spawnqueue = ReadSpawnListFromFile(file)
 		file:close()
+		
+		if SpawnedObjList_spawnRelative.Checked then
+			spawnqueueOffsetX = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x14))
+			spawnqueueOffsetY = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x18))
+			spawnqueueOffsetZ = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x1C))
+			spawnqueueRotationMode = SpawnedObjList_spawnRotated.State
+			spawnqueueAngleBAMS = readInteger(GetObjData1(readInteger(0x1DEA6E0), 0x0C))
+		else
+			spawnqueueOffsetX = 0
+			spawnqueueOffsetY = 0
+			spawnqueueOffsetZ = 0
+			spawnqueueRotationMode = 0
+			spawnqueueAngleBAMS = 0
+		end
+		
 		SpawnNextObject()
 	end
 end
@@ -104,6 +136,14 @@ function SaveObjListClick(sender)
 	end
 end
 
+function spawnRelativeChange(sender)
+	SpawnedObjList_spawnRotated.Enabled = SpawnedObjList_spawnRelative.Checked
+end
+
+function spawnRotatedChange(sender)
+	
+end
+
 -- CE 6.3 broke this function
 function openDialog_execute(od)
 	if od.execute() then
@@ -114,4 +154,9 @@ function openDialog_execute(od)
 end
 
 spawnqueue = {}
+spawnqueueOffsetX = 0
+spawnqueueOffsetY = 0
+spawnqueueOffsetZ = 0
+spawnqueueRotationMode = 0
+spawnqueueAngleBAMS = 0
 dofile("sa2lua/setexport.lua")
