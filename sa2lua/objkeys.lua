@@ -56,7 +56,7 @@ function UpdateObjectSelCube()
 			local x2 = x + 10
 			local y2 = y + 10
 			local z2 = z + 10
-			DrawCube3D("SelectedObject", x1, y1, z1, x2, y2, z2, 0xFF00FF00)
+			DrawCube3D("SelectedObject", x1, y1, z1, x2, y2, z2, ldcGreen)
 		else
 			RemoveCube("SelectedObject")
 		end
@@ -75,20 +75,25 @@ function OMKKeyHandler(sender)
 	local r = readInteger(GetObjData1(objaddr, 0x0C))
 	local curobj = objaddr
 	
-	if OMKActive and x ~= nil then
-		    if isKeyPressed(VK_A) then x = x + inc
-		elseif isKeyPressed(VK_D) then x = x - inc
-		elseif isKeyPressed(VK_R) then y = y + inc
-		elseif isKeyPressed(VK_F) then y = y - inc
-		elseif isKeyPressed(VK_W) then z = z + inc
-		elseif isKeyPressed(VK_S) then z = z - inc
-		elseif isKeyPressed(VK_Q) then r = r + 0x1000
-		elseif isKeyPressed(VK_E) then r = r - 0x1000
-		elseif isKeyPressed(VK_Z) then OMKDuplicateObject()
-		elseif isKeyPressed(VK_X) then
-			x = 4 * round(x/4, 0)
-			z = 4 * round(z/4, 0)
-		elseif isKeyPressed(VK_C) then
+	if OMKActive then
+		if x ~= nil then
+				if isKeyPressed(VK_A) then x = x + inc
+			elseif isKeyPressed(VK_D) then x = x - inc
+			elseif isKeyPressed(VK_R) then y = y + inc
+			elseif isKeyPressed(VK_F) then y = y - inc
+			elseif isKeyPressed(VK_W) then z = z + inc
+			elseif isKeyPressed(VK_S) then z = z - inc
+			elseif isKeyPressed(VK_Q) then r = r + 0x1000
+			elseif isKeyPressed(VK_E) then r = r - 0x1000
+			elseif isKeyPressed(VK_Z) then OMKDuplicateObject()
+			elseif isKeyPressed(VK_X) then
+				x = 4 * round(x/4, 0)
+				z = 4 * round(z/4, 0)
+			end
+		end
+		
+		-- The rest of the keys don't require a valid object selection to work.
+		if isKeyPressed(VK_C) then
 			SpawnObjectClick(SpawnObjectDlg_SpawnObject) --emulate button click
 		elseif isKeyPressed(VK_O) then PrevObject() UpdateObjectSelCube()
 		elseif isKeyPressed(VK_P) then NextObject() UpdateObjectSelCube()

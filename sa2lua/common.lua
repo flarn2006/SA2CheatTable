@@ -132,6 +132,29 @@ function UpdateTimer(sender)
 			end
 		end
 	end
+	
+	if IsLineDrawingEnabled() and IsPlayerValid() then
+		local x = tonumber(control_getCaption(SpawnObjectDlg_OffX))
+		local y = tonumber(control_getCaption(SpawnObjectDlg_OffY))
+		local z = tonumber(control_getCaption(SpawnObjectDlg_OffZ))
+		local notZero = (x ~= 0 or y ~= 0 or z ~= 0)
+		
+		if x ~= nil and y ~= nil and z ~= nil then
+			x = x + readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x14))
+			y = y + readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x18))
+			z = z + readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x1C))
+			if notZero then
+				local r = 5 -- radius of 3D cursor
+				DrawLine3D("OffsetCursorX", x-r, y, z, x+r, y, z, ldcRed)
+				DrawLine3D("OffsetCursorY", x, y-r, z, x, y+r, z, ldcRed)
+				DrawLine3D("OffsetCursorZ", x, y, z-r, x, y, z+r, ldcRed)
+			else
+				RemoveLine("OffsetCursorX")
+				RemoveLine("OffsetCursorY")
+				RemoveLine("OffsetCursorZ")
+			end
+		end
+	end
 end
 
 function IsPlayerValid()
