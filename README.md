@@ -27,7 +27,7 @@ Features Overview
 + Enable noclip mode (freely move character without being affected by gravity or walls) by pressing N
 + Many miscellaneous tweaks and hacks, including
   - Enable the test level and debug menu (debug menu can't actually be seen, but works)
-  - Use Chao World level select on any level
+  - Use Chao World character select on any level
   - Make levels load noticeably faster
   - Remove invisible walls from boss battles
   - And more!
@@ -36,6 +36,7 @@ Miscellaneous Tips
 ------------------
 
 + If you want to spawn an object in the air (like a balloon or a GUN Beetle robot), try spawning a movable cylinder, throwing it, and replacing it while it's in the air.
+  - Alternatively, you can use the new "Offset from Player" section.
 + Double-click an object name in the spawning window to see help for its parameters. (only works with some objects)
 + Double-click on a level name in the Level Mixer dialog to freeze the level value. Then start any level and it will load that one instead.
 
