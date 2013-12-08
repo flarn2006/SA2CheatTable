@@ -1,0 +1,257 @@
+Name,Routine,Flags,List,XPos,YPos,ZPos,XRot,YRot,ZRot,XScl,YScl,ZScl
+Iron Block,6D63F0,F,2,0,0,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,0,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,0,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,0,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,0,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,0,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,0,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,0,0,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,0,20,0,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,20,0,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,20,0,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,20,0,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,20,0,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,20,0,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,20,0,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,140,20,0,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,0,100,0,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,20,100,0,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,40,100,0,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,60,100,0,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,80,100,0,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,100,100,0,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,120,100,0,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,140,100,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,120,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,120,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,120,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,120,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,120,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,120,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,120,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,120,0,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,0,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,0,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,0,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,0,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,0,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,0,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,0,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,0,20,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,0,20,20,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,20,20,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,20,20,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,20,20,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,20,20,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,20,20,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,20,20,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,140,20,20,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,0,100,20,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,120,20,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,120,20,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,120,20,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,120,20,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,120,20,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,120,20,8000,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,140,100,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,120,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,120,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,120,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,120,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,120,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,120,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,120,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,120,20,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,0,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,0,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,0,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,0,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,0,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,0,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,0,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,0,40,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,0,20,40,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,20,40,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,20,40,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,20,40,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,20,40,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,20,40,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,20,40,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,140,20,40,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,0,100,40,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,120,40,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,120,40,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,120,40,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,120,40,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,120,40,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,120,40,8000,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,140,100,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,120,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,120,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,120,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,120,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,120,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,120,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,120,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,120,40,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,0,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,0,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,0,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,0,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,0,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,0,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,0,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,0,60,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,0,20,60,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,20,60,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,20,60,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,20,60,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,20,60,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,20,60,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,20,60,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,140,20,60,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,0,100,60,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,120,60,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,120,60,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,120,60,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,120,60,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,120,60,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,120,60,8000,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,140,100,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,120,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,120,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,120,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,120,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,120,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,120,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,120,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,120,60,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,0,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,0,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,0,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,0,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,0,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,0,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,0,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,0,80,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,0,20,80,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,20,80,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,20,80,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,20,80,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,20,80,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,20,80,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,20,80,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,140,20,80,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,0,100,80,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,120,80,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,120,80,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,120,80,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,120,80,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,120,80,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,120,80,8000,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,140,100,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,120,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,120,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,120,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,120,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,120,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,120,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,120,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,120,80,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,0,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,0,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,0,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,0,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,0,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,0,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,0,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,0,100,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,0,20,100,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,20,100,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,20,100,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,20,100,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,20,100,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,20,100,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,20,100,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,140,20,100,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,0,100,100,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,120,100,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,120,100,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,120,100,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,120,100,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,120,100,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,120,100,8000,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,140,100,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,120,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,120,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,120,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,120,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,120,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,120,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,120,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,120,100,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,0,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,0,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,0,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,0,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,0,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,0,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,0,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,0,120,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,0,20,120,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,20,120,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,20,120,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,20,120,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,20,120,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,20,120,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,20,120,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,140,20,120,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,0,100,120,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,120,120,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,120,120,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,120,120,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,120,120,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,120,120,8000,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,120,120,8000,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,140,100,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,120,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,120,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,120,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,120,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,120,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,120,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,120,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,120,120,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,0,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,0,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,0,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,0,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,0,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,0,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,0,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,0,140,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,0,20,140,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,20,20,140,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,40,20,140,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,60,20,140,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,80,20,140,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,100,20,140,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,120,20,140,0,0,0,1,1,1
+Weighted Pressure Plate (Light),6C4480,F,2,140,20,140,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,0,100,140,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,20,100,140,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,40,100,140,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,60,100,140,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,80,100,140,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,100,100,140,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,120,100,140,0,0,0,1,1,1
+Wooden Plank,6CD7F0,F,2,140,100,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,0,120,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,20,120,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,40,120,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,60,120,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,80,120,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,100,120,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,120,120,140,0,0,0,1,1,1
+Iron Block,6D63F0,F,2,140,120,140,0,0,0,1,1,1

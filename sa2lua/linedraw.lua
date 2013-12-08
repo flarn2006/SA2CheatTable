@@ -114,3 +114,14 @@ linelist = {}
 linelistaddr = nil
 linecodeaddr = nil
 waiting_for_linedraw_obj = false
+
+ldcBlack = 0xFF000000
+ldcRed = 0xFFFF0000
+ldcOrange = 0xFFFF8000
+ldcYellow = 0xFFFFFF00
+ldcGreen = 0xFF00FF00
+ldcCyan = 0xFF00FFFF
+ldcBlue = 0xFF0000FF
+ldcPurple = 0xFF8000C0
+ldcMagenta = 0xFFFF00FF
+ldcWhite = 0xFFFFFFFF

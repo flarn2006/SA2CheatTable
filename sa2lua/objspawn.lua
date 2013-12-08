@@ -4,10 +4,6 @@ end
 
 function EnableObjPlacementClick(sender)
 	EnableObjectSpawning()
-	control_setEnabled(SpawnObjectDlg_SpawnObject, true)
-	control_setEnabled(SpawnObjectDlg_ReplaceObject, true)
-	control_setEnabled(SpawnObjectDlg_SpawnCylinder, true)
-	control_setEnabled(CallFunc_Call, true)
 	--debugProcess()
 end
 
@@ -19,6 +15,11 @@ function EnableObjectSpawning()
 	writeInteger(0x77E781, hookaddr - 0x77E785)
 	writeInteger(hookcmd, 0)
 	fullAccess(0x42C645, 4)
+	control_setEnabled(SpawnObjectDlg_SpawnObject, true)
+	control_setEnabled(SpawnObjectDlg_ReplaceObject, true)
+	control_setEnabled(SpawnObjectDlg_SpawnCylinder, true)
+	control_setEnabled(CallFunc_Call, true)
+	control_setEnabled(ObjectChain_ObjManipKeysToggle, true)
 end
 
 function SpawnObject(routine, name, flags, list, customname, xpos, ypos, zpos, xrot, yrot, zrot, xscl, yscl, zscl, delay)
@@ -84,6 +85,9 @@ function SpawnObjectClick(sender)
 	local xpos = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x14))
 	local ypos = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x18))
 	local zpos = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x1C))
+	xpos = xpos + tonumber(control_getCaption(SpawnObjectDlg_OffX))
+	ypos = ypos + tonumber(control_getCaption(SpawnObjectDlg_OffY))
+	zpos = zpos + tonumber(control_getCaption(SpawnObjectDlg_OffZ))
 	local xscl = tonumber(control_getCaption(SpawnObjectDlg_SclX))
 	local yscl = tonumber(control_getCaption(SpawnObjectDlg_SclY))
 	local zscl = tonumber(control_getCaption(SpawnObjectDlg_SclZ))
@@ -306,6 +310,12 @@ function UpdateCollisionButtonCaption(isEnabled)
 	else
 		control_setCaption(SpawnObjectDlg_ToggleCollision, "Collision OFF")
 	end
+end
+
+function OffsetSetZeroClick(sender)
+	control_setCaption(SpawnObjectDlg_OffX, "0")
+	control_setCaption(SpawnObjectDlg_OffY, "0")
+	control_setCaption(SpawnObjectDlg_OffZ, "0")
 end
 
 dofile("sa2lua/spawnedlist.lua")
