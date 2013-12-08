@@ -141,15 +141,10 @@ call ebp					; Actually call said function
 ; Now we'll get our parameters out of the stack, but first we need to get the number
 ; of values we pushed back from memory.
 mov ecx,[StackCountStorage]	; Put the stack count back in ecx
-xchg ecx,eax				; This value needs to be in eax, so we'll switch them.
-
-; This is the number of values in the stack, but we need to multiply it by 4 to
-; get the value to add to esp. This is why we needed it in eax.
-mov edx,4					; Set the multiplier to 4
-mul edx						; eax = eax * 4<edx> (higher bits in edx, but we can ignore them)
-add esp,eax					; Remove the values from the stack
+lea ecx,[ecx*4]			; Multiply it by 4
+add esp,ecx					; Remove the values from the stack
 pop ebp						; Restore the value of ebp
-mov [ebp+0x08],ecx			; Put the return value from calling the function in memory
+mov [ebp+0x08],eax			; Put the return value from calling the function in memory
 
 ; Now we'll just finish up.
 pop edx						; Restore the value of edx
