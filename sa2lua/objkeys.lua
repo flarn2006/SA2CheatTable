@@ -56,7 +56,7 @@ function UpdateObjectSelCube()
 			local x2 = x + 10
 			local y2 = y + 10
 			local z2 = z + 10
-			DrawCube3D("SelectedObject", x1, y1, z1, x2, y2, z2, ldcGreen)
+			DrawCube3D("SelectedObject", x1, y1, z1, x2, y2, z2, SelectionBoxColor)
 		else
 			RemoveCube("SelectedObject")
 		end
@@ -123,4 +123,142 @@ function OMKDuplicateObject()
 	SpawnObject(routine, nameaddr, 0x0F, 0x02, false, xpos, ypos, zpos, xrot, yrot, zrot, xscl, yscl, zscl, 0)
 end
 
+function UpdateControllerState()
+	local controller_last = {}
+	
+	for k,v in pairs(controller) do
+		controller_last[k] = v
+	end
+	
+	controller.buttons = readInteger(0x1A52C4C) or 0
+	controller.leftX = readInteger(0x1A52C50) or 0
+	controller.leftY = readInteger(0x1A52C54) or 0
+	controller.rightX = readInteger(0x1A52C58) or 0
+	controller.rightY = readInteger(0x1A52C5C) or 0
+	controller.leftTrigger = readInteger(0x1A52C60) or 0
+	controller.rightTrigger = readInteger(0x1A52C64) or 0
+	controller.left = (Bitwise.bw_and(controller.buttons, 1) > 0)
+	controller.right = (Bitwise.bw_and(controller.buttons, 2) > 0)
+	controller.down = (Bitwise.bw_and(controller.buttons, 4) > 0)
+	controller.up = (Bitwise.bw_and(controller.buttons, 8) > 0)
+	controller.a = (Bitwise.bw_and(controller.buttons, 256) > 0)
+	controller.b = (Bitwise.bw_and(controller.buttons, 512) > 0)
+	controller.x = (Bitwise.bw_and(controller.buttons, 1024) > 0)
+	controller.y = (Bitwise.bw_and(controller.buttons, 2048) > 0)
+	controller.start = (Bitwise.bw_and(controller.buttons, 4096) > 0)
+	
+	controller.edge = {}
+	for i,v in ipairs({"left", "right", "down", "up", "a", "b", "x", "y", "start"}) do
+		controller.edge[v] = (controller_last[v] ~= controller[v])
+	end
+end
+
+function HandleControllerState()
+	-- These first two lines enable independent detection of the triggers and the right analog stick.
+	writeBytes(0x425910, 0x90, 0x90, 0x90)
+	writeBytes(0x425A10, 0x90, 0x90, 0x90)
+	if OMKActive and IsPlayerValid() then
+		if readInteger(GetObjData1(objaddr, 0)) ~= nil then
+			local cam = math.rad(readInteger(0x1DCFF1C) * (360 / 0x10000))
+			
+			--[[local testX = readFloat(GetObjData1(objaddr, 0x14))
+			local testY = readFloat(GetObjData1(objaddr, 0x18))
+			local testZ = readFloat(GetObjData1(objaddr, 0x1C))
+			
+			local offsetX = 50
+			local offsetZ = 0
+			local rotatedX = offsetX*math.cos(-cam) - offsetZ*math.sin(-cam)
+			local rotatedZ = offsetX*math.sin(-cam) + offsetZ*math.cos(-cam)
+			DrawLine3D("test1", testX, testY, testZ, testX+rotatedX, testY, testZ+rotatedZ, ldcRed)
+			offsetX = 0
+			offsetZ = 50
+			rotatedX = offsetX*math.cos(-cam) - offsetZ*math.sin(-cam)
+			rotatedZ = offsetX*math.sin(-cam) + offsetZ*math.cos(-cam)
+			DrawLine3D("test2", testX, testY, testZ, testX+rotatedX, testY, testZ+rotatedZ, ldcBlue)]]
+			
+			if controller.left then --move mode
+				SelectionBoxColor = ldcYellow
+				writeBytes(0x174AFFE, 0)
+				local speedMult = 1/64
+				local x = controller.rightX
+				local y = (controller.rightTrigger - controller.leftTrigger) / 2
+				local z = -controller.rightY
+				local rotated_x = x*math.cos(-cam) - z*math.sin(-cam)
+				local rotated_z = x*math.sin(-cam) + z*math.cos(-cam)
+				local objx = readFloat(GetObjData1(objaddr, 0x14)) + speedMult*rotated_x
+				local objy = readFloat(GetObjData1(objaddr, 0x18)) + speedMult*y
+				local objz = readFloat(GetObjData1(objaddr, 0x1C)) + speedMult*rotated_z
+				writeFloat(GetObjData1(objaddr, 0x14), objx)
+				writeFloat(GetObjData1(objaddr, 0x18), objy)
+				writeFloat(GetObjData1(objaddr, 0x1C), objz)
+			elseif controller.up then --rotate mode
+				SelectionBoxColor = ldcMagenta
+				writeBytes(0x174AFFE, 0)
+				local speedMult = 16
+				local x = controller.rightX
+				local y = (controller.rightTrigger - controller.leftTrigger) / 2
+				local z = controller.rightY
+				local objx = readInteger(GetObjData1(objaddr, 0x08)) + speedMult*x
+				local objy = readInteger(GetObjData1(objaddr, 0x0C)) + speedMult*y
+				local objz = readInteger(GetObjData1(objaddr, 0x10)) + speedMult*z
+				objx = Bitwise.bw_and(objx, 0xFFFF)
+				objy = Bitwise.bw_and(objy, 0xFFFF)
+				objz = Bitwise.bw_and(objz, 0xFFFF)
+				writeInteger(GetObjData1(objaddr, 0x08), objx)
+				writeInteger(GetObjData1(objaddr, 0x0C), objy)
+				writeInteger(GetObjData1(objaddr, 0x10), objz)
+			end
+		end
+		if controller.down and controller.edge.down then --toggle cursor mode
+			OMKCursorMode = not OMKCursorMode
+			if OMKCursorMode then
+				writeBytes(0x174AFFE, 0)
+				OMKCursorX = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x14))
+				OMKCursorY = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x18))
+				OMKCursorZ = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x1C))
+			end
+		end
+		if OMKCursorMode then
+			SelectionBoxColor = ldcBlue
+			local speedMult = 1/64
+			local x = controller.rightX
+			local y = (controller.rightTrigger - controller.leftTrigger) / 2
+			local z = -controller.rightY
+			local cam = math.rad(readInteger(0x1DCFF1C) * (360 / 0x10000))
+			local rotated_x = x*math.cos(-cam) - z*math.sin(-cam)
+			local rotated_z = x*math.sin(-cam) + z*math.cos(-cam)
+			OMKCursorX = OMKCursorX + speedMult*rotated_x
+			OMKCursorY = OMKCursorY + speedMult*y
+			OMKCursorZ = OMKCursorZ + speedMult*rotated_z
+			DrawCursor3D("OMKCursor", OMKCursorX, OMKCursorY, OMKCursorZ, 10, ldcCyan)
+			
+			local minDistObjAddr = 0
+			local minDistance = -1
+			for i,v in ipairs(allObjects[2]) do
+				local dX = v.px - OMKCursorX
+				local dY = v.py - OMKCursorY
+				local dZ = v.pz - OMKCursorZ
+				local distance = math.sqrt(dX*dX + dY*dY + dZ*dZ)
+				if distance < minDistance or minDistance == -1 then
+					minDistance = distance
+					minDistObjAddr = v.address
+				end
+			end
+			if minDistObjAddr ~= 0 then objaddr = minDistObjAddr end
+		else
+			RemoveCursor("OMKCursor")
+		end
+		if not controller.left and not controller.up and not OMKCursorMode then
+			SelectionBoxColor = ldcGreen
+			writeBytes(0x174AFFE, 1)
+		end
+		UpdateLineList()
+	end
+end
+
 OMKActive = false
+OMKCursorMode = false
+OMKCursorX = 0
+OMKCursorY = 0
+OMKCursorZ = 0
+SelectionBoxColor = 0xFF00FF00 --ldcGreen might not be defined yet

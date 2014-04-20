@@ -80,7 +80,7 @@ registersymbol(]]..name..[[)
 end 
 
 function AllocateString(str)
-	local addr = alloc(string.len(str) + 1)
+	local addr = allocateSharedMemory("String:"..str, string.len(str) + 1)
 	writeString(addr, str)
 	--print("Wrote \""..str.."\" to 0x"..num2hex(addr))
 	return addr
@@ -118,7 +118,7 @@ function UpdateTimer(sender)
 	local controls = readInteger(0x1A529EC)
 	OLCheckForDeletedObjects()
 	OLUpdateDistances()
-	if checkbox_getState(ObjectChain_AutoUpdate) == cbChecked then
+	if checkbox_getState(ObjectChain_AutoUpdate) == cbUnchecked then
 		OCUpdateControls()
 	end
 	CheckForSpawnedObject()
@@ -133,6 +133,9 @@ function UpdateTimer(sender)
 		end
 	end
 	
+	UpdateObjectListRecords()
+	EnableLineDrawingIfNecessary()
+	
 	if IsLineDrawingEnabled() and IsPlayerValid() then
 		local x = tonumber(control_getCaption(SpawnObjectDlg_OffX))
 		local y = tonumber(control_getCaption(SpawnObjectDlg_OffY))
@@ -144,17 +147,15 @@ function UpdateTimer(sender)
 			y = y + readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x18))
 			z = z + readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x1C))
 			if notZero then
-				local r = 5 -- radius of 3D cursor
-				DrawLine3D("OffsetCursorX", x-r, y, z, x+r, y, z, ldcRed)
-				DrawLine3D("OffsetCursorY", x, y-r, z, x, y+r, z, ldcRed)
-				DrawLine3D("OffsetCursorZ", x, y, z-r, x, y, z+r, ldcRed)
+				DrawCursor3D("OffsetCursor", x, y, z, 5, ldcRed)
 			else
-				RemoveLine("OffsetCursorX")
-				RemoveLine("OffsetCursorY")
-				RemoveLine("OffsetCursorZ")
+				RemoveCursor("OffsetCursor")
 			end
 		end
 	end
+	
+	UpdateControllerState()
+	HandleControllerState()
 end
 
 function IsPlayerValid()
@@ -175,10 +176,11 @@ function round(num, idp)
 end
 
 function debugger_onBreakpoint()
-	if EIP == 0x47BD30 then
-		return LTHHookTriggered()
-	else
+	local func = BreakpointCallbackTbl[EIP]
+	if func == nil then
 		return 0
+	else
+		return func()
 	end
 end
 
@@ -196,4 +198,8 @@ if getCEVersion() < 6.3 then
 	end
 end
 
+BreakpointCallbackTbl = {[0x47BD30] = LTHHookTriggered}
 str_alloc_addr = nil
+controller = {}
+
+dofile("sa2lua/objenum.lua")

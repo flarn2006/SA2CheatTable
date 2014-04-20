@@ -1,17 +1,27 @@
 function EnableLineDrawingIfNecessary()
-	if trace then print("EnableLineDrawingIfNecessary called") end
-	if readInteger(hookcmd) == nil then
-		if trace then print("EnableLineDrawingIfNecessary enabling object spawning") end
-		EnableObjectSpawning()
+	if IsPlayerValid() then
+		if trace then print("EnableLineDrawingIfNecessary called") end
+		if readInteger(hookcmd) == nil then
+			if trace then print("EnableLineDrawingIfNecessary enabling object spawning") end
+			EnableObjectSpawning()
+		end
+		if not IsLineDrawingEnabled() then
+			if trace then print("EnableLineDrawingIfNecessary enabling line drawing") end
+			linecodeaddr = allocateSharedMemory("DrawLine3DCode", 4096)
+			linelistaddr = allocateSharedMemory("DrawLine3DList", 65536)
+			readRegionFromFile("sa2lua/linedraw.bin", linecodeaddr)
+			CreateLineDrawingObject()
+		else
+			if FindObjectByName(0x01A5A258, "$Lua$DrawLine3D") == 0 then
+				CreateLineDrawingObject()
+			end
+		end
 	end
-	if not IsLineDrawingEnabled() then
-		if trace then print("EnableLineDrawingIfNecessary enabling line drawing") end
-		linecodeaddr = allocateSharedMemory("DrawLine3DCode", 4096)
-		linelistaddr = allocateSharedMemory("DrawLine3DList", 65536)
-		readRegionFromFile("sa2lua/linedraw.bin", linecodeaddr)
-		SpawnObject(linecodeaddr, "$Lua$DrawLine3D", 1, 1, true, 0,0,0,0,0,0,0,0,0,0)
-		waiting_for_linedraw_obj = true
-	end
+end
+
+function CreateLineDrawingObject()
+	SpawnObject(linecodeaddr, "$Lua$DrawLine3D", 1, 1, true, 0,0,0,0,0,0,0,0,0,0)
+	waiting_for_linedraw_obj = true
 end
 
 function IsLineDrawingEnabled()
@@ -102,6 +112,18 @@ pt2+----|/
 	DrawLine3D(identifier.."10", x1, y1, z2, x1, y2, z2, color)
 	DrawLine3D(identifier.."11", x2, y1, z2, x2, y2, z2, color)
 	DrawLine3D(identifier.."12", x2, y1, z1, x2, y2, z1, color)
+end
+
+function DrawCursor3D(identifier, x, y, z, r, color)
+	DrawLine3D(identifier.."X", x-r, y, z, x+r, y, z, color)
+	DrawLine3D(identifier.."Y", x, y-r, z, x, y+r, z, color)
+	DrawLine3D(identifier.."Z", x, y, z-r, x, y, z+r, color)
+end
+
+function RemoveCursor(identifier)
+	RemoveLine(identifier.."X")
+	RemoveLine(identifier.."Y")
+	RemoveLine(identifier.."Z")
 end
 
 function RemoveCube(identifier)

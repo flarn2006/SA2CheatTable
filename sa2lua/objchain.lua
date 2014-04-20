@@ -231,6 +231,19 @@ function DeleteObjClick(sender)
 	OCUpdateControls()
 end
 
+function AutoUpdateChange(sender)
+	local enable = checkbox_getState(ObjectChain_AutoUpdate) == cbChecked
+	control_setEnabled(ObjectChain_ObjPosX, enable)
+	control_setEnabled(ObjectChain_ObjPosY, enable)
+	control_setEnabled(ObjectChain_ObjPosZ, enable)
+	control_setEnabled(ObjectChain_ObjRotX, enable)
+	control_setEnabled(ObjectChain_ObjRotY, enable)
+	control_setEnabled(ObjectChain_ObjRotZ, enable)
+	control_setEnabled(ObjectChain_ObjSclX, enable)
+	control_setEnabled(ObjectChain_ObjSclY, enable)
+	control_setEnabled(ObjectChain_ObjSclZ, enable)
+end
+
 -- Initialization
 
 endobjaddr = 0

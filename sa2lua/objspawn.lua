@@ -77,6 +77,9 @@ function SpawnObjectClick(sender)
 		xrot = readInteger(GetObjData1(readInteger(0x1DEA6E0), 0x08))
 		yrot = readInteger(GetObjData1(readInteger(0x1DEA6E0), 0x0C))
 		zrot = readInteger(GetObjData1(readInteger(0x1DEA6E0), 0x10))
+		if routine == 0x6CFBF0 then
+			yrot = 0xFFFF - yrot + 0x4000
+		end
 	else
 		xrot = tonumber(control_getCaption(SpawnObjectDlg_RotX), 16)
 		yrot = tonumber(control_getCaption(SpawnObjectDlg_RotY), 16)
