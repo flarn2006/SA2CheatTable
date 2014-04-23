@@ -85,12 +85,19 @@ function SpawnObjectClick(sender)
 		yrot = tonumber(control_getCaption(SpawnObjectDlg_RotY), 16)
 		zrot = tonumber(control_getCaption(SpawnObjectDlg_RotZ), 16)
 	end
-	local xpos = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x14))
-	local ypos = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x18))
-	local zpos = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x1C))
-	xpos = xpos + tonumber(control_getCaption(SpawnObjectDlg_OffX))
-	ypos = ypos + tonumber(control_getCaption(SpawnObjectDlg_OffY))
-	zpos = zpos + tonumber(control_getCaption(SpawnObjectDlg_OffZ))
+	local xpos, ypos, zpos
+	if OMKCursorMode then
+		xpos = OMKCursorX
+		ypos = OMKCursorY
+		zpos = OMKCursorZ
+	else
+		xpos = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x14))
+		ypos = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x18))
+		zpos = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x1C))
+		xpos = xpos + tonumber(control_getCaption(SpawnObjectDlg_OffX))
+		ypos = ypos + tonumber(control_getCaption(SpawnObjectDlg_OffY))
+		zpos = zpos + tonumber(control_getCaption(SpawnObjectDlg_OffZ))
+	end
 	local xscl = tonumber(control_getCaption(SpawnObjectDlg_SclX))
 	local yscl = tonumber(control_getCaption(SpawnObjectDlg_SclY))
 	local zscl = tonumber(control_getCaption(SpawnObjectDlg_SclZ))

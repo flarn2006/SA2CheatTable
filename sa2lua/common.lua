@@ -156,6 +156,9 @@ function UpdateTimer(sender)
 	
 	UpdateControllerState()
 	HandleControllerState()
+	OMKDrawObjects()
+	UpdateLineList()
+	LDLineListTemp = {}
 end
 
 function IsPlayerValid()

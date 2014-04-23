@@ -48,3 +48,7 @@ Large Cylinder,3,2,6D6FB0
 Tall Cylinder,3,2,6D7030
 Uprootable Cyl.,3,2,6D70E0
 Gravity Cylinder,2,2,7A3760
+Collision Cube,2,2,6E54E0
+Collision Cylinder,2,2,6E5470
+Collision Wall,2,2,6E5550
+Collision Circle,2,2,6E55C0
