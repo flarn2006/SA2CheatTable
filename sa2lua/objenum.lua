@@ -15,9 +15,9 @@
 end]]--
 
 function FindObjectByName(objlist, name)
-	if objectLists[objlist] == nil then return nil end
-	if #objectLists[objlist] == 0 then return nil end
-	for obj in objectLists[objlist] do
+	if allObjects[objlist] == nil then return nil end
+	if #allObjects[objlist] == 0 then return nil end
+	for obj in allObjects[objlist] do
 		if obj.name == name then
 			return obj
 		end
@@ -71,5 +71,4 @@ function UpdateObjectListRecords()
 	end
 end
 
-objectLists = {}
 allObjects = {}
