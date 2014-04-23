@@ -12,7 +12,7 @@ function EnableLineDrawingIfNecessary()
 			readRegionFromFile("sa2lua/linedraw.bin", LDLineCodeAddr)
 			CreateLineDrawingObject()
 		else
-			if FindObjectByName(0x01A5A258, "$Lua$DrawLine3D") == 0 then
+			if FindObjectByName(1, "$Lua$DrawLine3D") == 0 then
 				CreateLineDrawingObject()
 			end
 		end
