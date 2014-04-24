@@ -17,8 +17,8 @@ end]]--
 function FindObjectByName(objlist, name)
 	if allObjects[objlist] == nil then return nil end
 	if #allObjects[objlist] == 0 then return nil end
-	for obj in allObjects[objlist] do
-		if obj.name == name then
+	for i,v in ipairs(allObjects[objlist]) do
+		if v.name == name then
 			return obj
 		end
 	end
@@ -31,22 +31,17 @@ function CheckForObjectWithName(objlist, name)
 	return #result ~= 0
 end
 
-function EnumerateObjects(listnum)
-	local found = {}
+function GenerateObjData(addr)
+	if readInteger(addr) == nil then return nil end
+	local objdata = {}
 	
-	local originalAddr = readInteger(0x1A5A254 + 4 * listnum)
-	local addr = originalAddr
-	if readInteger(addr) == nil or not IsPlayerValid() then return nil end
-	local limit = 5000
-	repeat
-		if addr == nil then return nil end
-		
-		local objdata = {}
-		objdata.address = addr
-		objdata.routine = readInteger(addr + 0x10)
-		objdata.name = readString(readInteger(addr + 0x44), 64)
-		objdata.list = listnum
-		objdata.flags = 15 --for SpawnFromObjData
+	objdata.address = addr
+	objdata.routine = readInteger(addr + 0x10)
+	objdata.name = readString(readInteger(addr + 0x44), 64)
+	objdata.list = listnum
+	objdata.flags = 15 --for SpawnFromObjData
+	
+	if readInteger(GetObjData1(addr, 0)) ~= nil then
 		objdata.rx = readInteger(GetObjData1(addr, 0x8))
 		objdata.ry = readInteger(GetObjData1(addr, 0xC))
 		objdata.rz = readInteger(GetObjData1(addr, 0x10))
@@ -56,12 +51,25 @@ function EnumerateObjects(listnum)
 		objdata.sx = readFloat(GetObjData1(addr, 0x20))
 		objdata.sy = readFloat(GetObjData1(addr, 0x24))
 		objdata.sz = readFloat(GetObjData1(addr, 0x28))
-		
-		table.insert(found, objdata)
-		
+	end
+	
+	return objdata
+end
+
+function EnumerateObjects(listnum)
+	local found = {}
+	
+	local originalAddr = readInteger(0x1A5A254 + 4 * listnum)
+	local addr = originalAddr
+	if readInteger(addr) == nil or not IsPlayerValid() then return nil end
+	local limit = 5000
+	repeat
+		if addr == nil then return nil end
+		table.insert(found, GenerateObjData(addr))
 		addr = readInteger(addr + 4)
 		limit = limit - 1
 	until addr == originalAddr or limit == 0
+	
 	return found
 end
 
@@ -69,6 +77,7 @@ function UpdateObjectListRecords()
 	for i=0,6 do
 		allObjects[i] = EnumerateObjects(i) or {}
 	end
+	selObj = GenerateObjData(objaddr)
 end
 
 allObjects = {}

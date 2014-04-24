@@ -121,6 +121,7 @@ function UpdateTimer(sender)
 	if checkbox_getState(ObjectChain_AutoUpdate) == cbUnchecked then
 		OCUpdateControls()
 	end
+	if UpdateObjectSelCube ~= nil then UpdateObjectSelCube() end
 	CheckForSpawnedObject()
 	CheckForFCReturnValue()
 	UpdateCollisionButtonCaption()

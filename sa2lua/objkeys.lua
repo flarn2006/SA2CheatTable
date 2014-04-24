@@ -49,8 +49,7 @@ end
 function UpdateObjectSelCube()
 	if EnableObjectSpawning ~= nil and readInteger(linedraw_objaddr) ~= nil then
 		if OMKActive and readFloat(GetObjData1(objaddr, 0x14)) ~= nil then
-			local radius = OMKSelBoxRadiusOverride[readInteger(objaddr + 0x10)]
-			if radius == nil then radius = 10 end
+			local radius = OMKSelBoxRadiusOverride[readInteger(objaddr + 0x10)] or 10
 			if radius ~= 0 then
 				local x = readFloat(GetObjData1(objaddr, 0x14))
 				local y = readFloat(GetObjData1(objaddr, 0x18))
@@ -191,6 +190,7 @@ function HandleControllerState()
 MOVING SELECTION
 Use right analog stick to move horizontally
 Use triggers to move vertically]]
+				OMKAppendObjDescription()
 				SelectionBoxColor = ldcYellow
 				writeBytes(0x174AFFE, 0)
 				local speedMult = 1/64
@@ -210,6 +210,7 @@ Use triggers to move vertically]]
 ROTATING SELECTION
 Use right analog stick to rotate around X/Z
 Use triggers to rotate around Y]]
+				OMKAppendObjDescription()
 				SelectionBoxColor = ldcMagenta
 				writeBytes(0x174AFFE, 0)
 				local speedMult = 16
@@ -251,6 +252,8 @@ X = ]]..tostring(OMKCursorX)..[[
 Y = ]]..tostring(OMKCursorY)..[[
 
 Z = ]]..tostring(OMKCursorZ)
+			
+			OMKAppendObjDescription()
 			SelectionBoxColor = ldcBlue
 			local speedMult = 1/64
 			local x = controller.rightX
@@ -267,13 +270,15 @@ Z = ]]..tostring(OMKCursorZ)
 			local minDistObjAddr = 0
 			local minDistance = -1
 			for i,v in ipairs(allObjects[2]) do
-				local dX = v.px - OMKCursorX
-				local dY = v.py - OMKCursorY
-				local dZ = v.pz - OMKCursorZ
-				local distance = math.sqrt(dX*dX + dY*dY + dZ*dZ)
-				if distance < minDistance or minDistance == -1 then
-					minDistance = distance
-					minDistObjAddr = v.address
+				if v.px ~= nil then
+					local dX = v.px - OMKCursorX
+					local dY = v.py - OMKCursorY
+					local dZ = v.pz - OMKCursorZ
+					local distance = math.sqrt(dX*dX + dY*dY + dZ*dZ)
+					if distance < minDistance or minDistance == -1 then
+						minDistance = distance
+						minDistObjAddr = v.address
+					end
 				end
 			end
 			if minDistObjAddr ~= 0 then objaddr = minDistObjAddr end
@@ -387,8 +392,23 @@ function OMKDrawObjects()
 	end
 end
 
-function TestDrawHandler(objdata, defaultColor, prefix)
-	DrawLine3D(prefix, objdata.px, objdata.py, objdata.pz, objdata.px, objdata.py + 40, objdata.pz, defaultColor, true)
+function OMKDescribeSelection()
+	return [[
+Selected Object: ]]..selObj.name..[[
+
+Position:        ]]..string.format("%4.5f | %4.5f | %4.5f", selObj.px, selObj.py, selObj.pz)..[[
+
+Rotation:        ]]..string.format("%08X | %08X | %08X", selObj.rx, selObj.ry, selObj.rz)..[[
+
+Scale:           ]]..string.format("%4.5f | %4.5f | %4.5f", selObj.sx, selObj.sy, selObj.sz)
+end
+
+function OMKAppendObjDescription()
+	if selObj ~= nil then
+		if selObj.px ~= nil then
+			OMKHelpText = OMKHelpText.."\n\n"..OMKDescribeSelection()
+		end
+	end
 end
 
 function OMKDrawCube(obj, color, prefix)
