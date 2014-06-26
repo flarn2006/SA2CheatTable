@@ -42,7 +42,7 @@ With an object selected (and the cursor not active) you can also move and rotate
 
 Another feature you may notice is that some previously invisible objects (such as collision boxes) are made visible. For example, in City Escape, you may see cyan boxes around rails, which I believe have something to do with giving bonus points for "tricks", and cylinders surrounding tree trunks which otherwise have no collision. If you've ever seen that "debug mode" Gameshark code for Sonic Adventure on the Dreamcast that makes all those white boxes appear, this serves a similar purpose.
 
-Be aware that if you quit and reload Cheat Engine without restarting SA2, LEM's text display will no longer function. This is due to a limitation of Cheat Engine, which is likely to be fixed in version 6.4. Live Edit Mode should still work however, including any 3D graphics it renders.
+If you quit and reload Cheat Engine without restarting SA2, and LEM's text display no longer functions, this is due to a limitation in Cheat Engine 6.3 and older. Upgrading to 6.4 should fix this.
 
 Miscellaneous Tips
 ------------------
