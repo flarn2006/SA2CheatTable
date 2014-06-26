@@ -332,6 +332,9 @@ function OMKStop()
 end
 
 function OMKGetD3DHook()
+	-- UPDATE: Cheat Engine 6.4 supports reattaching the D3D hook.
+	-- This function will now check for that and behave accordingly.
+	
 	-- Cheat Engine crashes if you call createD3DHook on a process if:
 	--   1) createD3DHook has already been called on the same process, and
 	--   2) Cheat Engine has been quit since the first time it was called.
@@ -365,7 +368,12 @@ function OMKGetD3DHook()
 	
 	if lastPID == thisPID then
 		if OMKD3DHook == nil then
-			return nil
+			if getCEVersion() < 6.4 then
+				return nil
+			else
+				OMKD3DHook = createD3DHook()
+				return OMKD3DHook
+			end
 		else
 			return OMKD3DHook
 		end
