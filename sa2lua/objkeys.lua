@@ -165,6 +165,7 @@ function HandleControllerState()
 	writeBytes(0x425910, 0x90, 0x90, 0x90)
 	writeBytes(0x425A10, 0x90, 0x90, 0x90)
 	SelectionBoxColor = ldcGreen
+	if OMKActive then OMKCurrentMode = "default" else OMKCurrentMode = "off" end
 	OMKHelpText = "- LIVE EDIT MODE -"
 	if OMKActive and IsPlayerValid() then
 		if readInteger(GetObjData1(objaddr, 0)) ~= nil then
@@ -186,6 +187,7 @@ function HandleControllerState()
 			DrawLine3D("test2", testX, testY, testZ, testX+rotatedX, testY, testZ+rotatedZ, ldcBlue)]]
 			
 			if controller.left and not OMKCursorMode then --move mode
+				OMKCurrentMode = "move"
 				OMKHelpText = [[- LIVE EDIT MODE -
 MOVING SELECTION
 Use right analog stick to move horizontally
@@ -206,6 +208,7 @@ Use triggers to move vertically]]
 				writeFloat(GetObjData1(objaddr, 0x18), objy)
 				writeFloat(GetObjData1(objaddr, 0x1C), objz)
 			elseif controller.up and not OMKCursorMode then --rotate mode
+				OMKCurrentMode = "rotate"
 				OMKHelpText = [[- LIVE EDIT MODE -
 ROTATING SELECTION
 Use right analog stick to rotate around X/Z
@@ -226,15 +229,34 @@ Use triggers to rotate around Y]]
 				writeInteger(GetObjData1(objaddr, 0x08), objx)
 				writeInteger(GetObjData1(objaddr, 0x0C), objy)
 				writeInteger(GetObjData1(objaddr, 0x10), objz)
+			elseif controller.right and not OMKCursorMode then --special mode
+				local Handler = OMKSpecialModeHandlers[selObj.routine]
+				if Handler ~= nil then
+					local helptext = Handler("getHelpText")
+					OMKCurrentMode = "special"
+					SelectionBoxColor = ldcRed
+					writeBytes(0x174AFFE, 0)
+					OMKHelpText = "- LIVE EDIT MODE -\n"..helptext
+					OMKAppendObjDescription()
+					local dX = controller.rightX
+					local dY = (controller.rightTrigger - controller.leftTrigger) / 2
+					local dZ = -controller.rightY
+					local dXr = dX*math.cos(-cam) - dZ*math.sin(-cam)
+					local dZr = dX*math.sin(-cam) + dZ*math.cos(-cam)
+					Handler("handleState", dX, dY, dZ, dXr, dZr)
+				end
 			end
 		end
 		if controller.down and controller.edge.down then --toggle cursor mode
 			OMKCursorMode = not OMKCursorMode
 			if OMKCursorMode then
+				OMKCurrentMode = "cursor"
 				writeBytes(0x174AFFE, 0)
 				OMKCursorX = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x14))
 				OMKCursorY = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x18))
 				OMKCursorZ = readFloat(GetObjData1(readInteger(0x1DEA6E0), 0x1C))
+			else
+				OMKCurrentMode = "default"
 			end
 		end
 		if OMKCursorMode then
@@ -297,7 +319,7 @@ Z = ]]..tostring(OMKCursorZ)
 		else
 			RemoveCursor("OMKCursor")
 		end
-		if not controller.left and not controller.up and not OMKCursorMode then
+		if not controller.left and not controller.up and not controller.right and not OMKCursorMode then
 			SelectionBoxColor = ldcGreen
 			writeBytes(0x174AFFE, 1)
 		end
@@ -332,9 +354,6 @@ function OMKStop()
 end
 
 function OMKGetD3DHook()
-	-- UPDATE: Cheat Engine 6.4 supports reattaching the D3D hook.
-	-- This function will now check for that and behave accordingly.
-	
 	-- Cheat Engine crashes if you call createD3DHook on a process if:
 	--   1) createD3DHook has already been called on the same process, and
 	--   2) Cheat Engine has been quit since the first time it was called.
@@ -368,12 +387,7 @@ function OMKGetD3DHook()
 	
 	if lastPID == thisPID then
 		if OMKD3DHook == nil then
-			if getCEVersion() < 6.4 then
-				return nil
-			else
-				OMKD3DHook = createD3DHook()
-				return OMKD3DHook
-			end
+			return nil
 		else
 			return OMKD3DHook
 		end
@@ -402,7 +416,7 @@ end
 
 function OMKDescribeSelection()
 	return [[
-Selected Object: ]]..selObj.name..[[
+Selected Object: ]]..(selObj.name or "[unknown]")..[[
 
 Position:        ]]..string.format("%4.5f | %4.5f | %4.5f", selObj.px, selObj.py, selObj.pz)..[[
 
@@ -454,11 +468,97 @@ function OMKDrawWall(obj, color, prefix)
 	DrawLine3D(prefix.."arrow3", obj.px, obj.py, obj.pz + 30, obj.px, obj.py - 5, obj.pz + 25, color, true)
 end
 
+function OMKDrawScaleAsDestination(obj, color, prefix)
+	local markerColor = ldcCyan
+	if OMKCurrentMode == "special" then markerColor = ldcYellow end
+	DrawLine3D(prefix.."connector", obj.px, obj.py, obj.pz, obj.sx, obj.sy, obj.sz, color, true)
+	DrawCursor3D(prefix.."marker", obj.sx, obj.sy, obj.sz, 10, markerColor, true)
+end
+
+function OMKDrawSphereGravSw(obj, color, prefix)
+	if objaddr == obj.address then
+		local multiplier = 1/4
+		DrawCircle3D(prefix.."1", obj.px, obj.py, obj.pz, obj.sx * multiplier, 25, color, true)
+		LDRotateCtrX = obj.px
+		LDRotateCtrY = obj.py
+		LDRotateCtrZ = obj.pz
+		LDRotateZ = 0x4000
+		DrawCircle3D(prefix.."2", obj.px, obj.py, obj.pz, obj.sx * multiplier, 25, color, true)
+		LDRotateZ = 0
+		LDRotateX = 0x4000
+		DrawCircle3D(prefix.."3", obj.px, obj.py, obj.pz, obj.sx * multiplier, 25, color, true)
+		LDResetRotation()
+	end
+end
+
+function OMKSMHSetScaleLikePosition(request, dX, dY, dZ, dXr, dZr)
+	-- Special mode handler that enables setting scale values in the same way as moving the object.
+	-- Most useful if an object's scale values refer to a location on the map. (like rockets, etc.)
+	SelectionBoxColor = ldcCyan
+	if request == "getHelpText" then
+		return [[
+SETTING DESTINATION COORDINATES
+Use right analog stick to move horizontally
+Use triggers to move vertically
+Press Y to set to object coordinates]]
+	
+	elseif request == "handleState" then
+		local speedMult = 1/64
+		local x = selObj.sx + dXr * speedMult
+		local y = selObj.sy + dY * speedMult
+		local z = selObj.sz + dZr * speedMult
+		
+		if controller.y and controller.edge.y then
+			x = selObj.px
+			y = selObj.py
+			z = selObj.pz
+		end
+		
+		selObj.sx = x
+		selObj.sy = y
+		selObj.sz = z
+		UpdateObjFromData(selObj)
+	else
+		return nil
+	end
+end
+
+function OMKSMHSetScaleNormally(request, dX, dY, dZ, dXr, dZr)
+	if request == "getHelpText" then
+		return [[
+SETTING SCALE OF SELECTION
+Use right analog stick to set X/Z scale
+Use triggers to set Y scale]]
+
+	elseif request == "handleState" then
+		local speedMult = 1/64
+		selObj.sx = selObj.sx + dX * speedMult
+		selObj.sy = selObj.sy + dY * speedMult
+		selObj.sz = selObj.sz + dZ * speedMult
+		UpdateObjFromData(selObj)
+	else
+		return nil
+	end
+end
+
 OMKDrawHandlers = {}
 OMKDrawHandlers[0x6E54E0] = OMKDrawCube --CCUBE
 OMKDrawHandlers[0x6E6FC0] = OMKDrawCube --LINKLINK
 OMKDrawHandlers[0x6E5470] = OMKDrawCylinder --CCYL
 OMKDrawHandlers[0x6E5550] = OMKDrawWall --CWALL
+OMKDrawHandlers[0x6D50F0] = OMKDrawScaleAsDestination --ROCKET
+OMKDrawHandlers[0x640DB0] = OMKDrawScaleAsDestination --WARP (paintings in Death Chamber, etc.)
+OMKDrawHandlers[0x6542F0] = OMKDrawSphereGravSw --GRAV_SW
+OMKDrawHandlers[0x5AE140] = OMKDrawCube --SCOL
+
+OMKSpecialModeHandlers = {}
+OMKSpecialModeHandlers[0x6D50F0] = OMKSMHSetScaleLikePosition --ROCKET
+OMKSpecialModeHandlers[0x640DB0] = OMKSMHSetScaleLikePosition --WARP (see above)
+OMKSpecialModeHandlers[0x6E54E0] = OMKSMHSetScaleNormally --CCUBE
+OMKSpecialModeHandlers[0x6E6FC0] = OMKSMHSetScaleNormally --LINKLINK
+OMKSpecialModeHandlers[0x6E5470] = OMKSMHSetScaleNormally --CCYL
+OMKSpecialModeHandlers[0x6E5550] = OMKSMHSetScaleNormally --CWALL
+OMKSpecialModeHandlers[0x5AE140] = OMKSMHSetScaleNormally --SCOL
 
 OMKSelBoxRadiusOverride = {}
 OMKSelBoxRadiusOverride[0x6E54E0] = 3
@@ -467,6 +567,7 @@ OMKSelBoxRadiusOverride[0x6E5550] = 3
 
 OMKActive = false
 OMKCursorMode = false
+OMKCurrentMode = "default"
 OMKCursorX = 0
 OMKCursorY = 0
 OMKCursorZ = 0

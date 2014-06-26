@@ -141,7 +141,7 @@ call ebp					; Actually call said function
 ; Now we'll get our parameters out of the stack, but first we need to get the number
 ; of values we pushed back from memory.
 mov ecx,[StackCountStorage]	; Put the stack count back in ecx
-lea ecx,[ecx*4]			; Multiply it by 4
+lea ecx,[ecx*4]				; Multiply it by 4
 add esp,ecx					; Remove the values from the stack
 pop ebp						; Restore the value of ebp
 mov [ebp+0x08],eax			; Put the return value from calling the function in memory

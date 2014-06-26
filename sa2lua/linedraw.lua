@@ -151,10 +151,10 @@ end
 function DrawCylinder3D(identifier, x, y, z, r, h, sides, color, temp)
 	for i=0,sides-1 do
 		local twopi = math.rad(360)
-		local x1 = r*math.cos(i * twopi/sides) + x
-		local z1 = r*math.sin(i * twopi/sides) + z
-		local x2 = r*math.cos((i+1) * twopi/sides) + x
-		local z2 = r*math.sin((i+1) * twopi/sides) + z
+		local x1 = r * math.cos(i * twopi/sides) + x
+		local z1 = r * math.sin(i * twopi/sides) + z
+		local x2 = r * math.cos((i + 1) * twopi/sides) + x
+		local z2 = r * math.sin((i + 1) * twopi/sides) + z
 		DrawLine3D(identifier..tonumber(i).."b", x1, y-h/2, z1, x2, y-h/2, z2, color, temp) --bottom
 		DrawLine3D(identifier..tonumber(i).."t", x1, y+h/2, z1, x2, y+h/2, z2, color, temp) --top
 		DrawLine3D(identifier..tonumber(i).."s", x1, y-h/2, z1, x1, y+h/2, z1, color, temp) --side
@@ -169,7 +169,7 @@ function RemoveCylinder(identifier, sides)
 	end
 end
 
-function DrawCursor3D(identifier, x, y, z, r, color)
+function DrawCursor3D(identifier, x, y, z, r, color, temp)
 	DrawLine3D(identifier.."X", x-r, y, z, x+r, y, z, color, temp)
 	DrawLine3D(identifier.."Y", x, y-r, z, x, y+r, z, color, temp)
 	DrawLine3D(identifier.."Z", x, y, z-r, x, y, z+r, color, temp)
@@ -179,6 +179,17 @@ function RemoveCursor(identifier)
 	RemoveLine(identifier.."X")
 	RemoveLine(identifier.."Y")
 	RemoveLine(identifier.."Z")
+end
+
+function DrawCircle3D(identifier, x, y, z, r, sides, color, temp)
+	for i=0,sides-1 do
+		local twopi = math.rad(360)
+		local x1 = r * math.cos(i * twopi/sides) + x
+		local z1 = r * math.sin(i * twopi/sides) + z
+		local x2 = r * math.cos((i + 1) * twopi/sides) + x
+		local z2 = r * math.sin((i + 1) * twopi/sides) + z
+		DrawLine3D(identifier..tonumber(i), x1, y, z1, x2, y, z2, color, temp)
+	end
 end
 
 function RemoveCube(identifier)

@@ -31,7 +31,7 @@ function CheckForObjectWithName(objlist, name)
 	return #result ~= 0
 end
 
-function GenerateObjData(addr)
+function GenerateObjData(addr, listnum)
 	if readInteger(addr) == nil then return nil end
 	local objdata = {}
 	
@@ -56,6 +56,22 @@ function GenerateObjData(addr)
 	return objdata
 end
 
+function UpdateObjFromData(objdata)
+	local addr = objdata.address
+	if readInteger(GetObjData1(addr, 0)) ~= nil then
+		writeInteger(GetObjData1(addr, 0x8), objdata.rx)
+		writeInteger(GetObjData1(addr, 0xC), objdata.ry)
+		writeInteger(GetObjData1(addr, 0x10), objdata.rz)
+		writeFloat(GetObjData1(addr, 0x14), objdata.px)
+		writeFloat(GetObjData1(addr, 0x18), objdata.py)
+		writeFloat(GetObjData1(addr, 0x1C), objdata.pz)
+		writeFloat(GetObjData1(addr, 0x20), objdata.sx)
+		writeFloat(GetObjData1(addr, 0x24), objdata.sy)
+		writeFloat(GetObjData1(addr, 0x28), objdata.sz)
+	end
+end
+		
+
 function EnumerateObjects(listnum)
 	local found = {}
 	
@@ -65,7 +81,7 @@ function EnumerateObjects(listnum)
 	local limit = 5000
 	repeat
 		if addr == nil then return nil end
-		table.insert(found, GenerateObjData(addr))
+		table.insert(found, GenerateObjData(addr, listnum))
 		addr = readInteger(addr + 4)
 		limit = limit - 1
 	until addr == originalAddr or limit == 0

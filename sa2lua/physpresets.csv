@@ -1,0 +1,6 @@
+Name,HangTime,HorizSpeedCap,VertSpeedCap,SpeedMod,InitJumpSpeed,AddWhileJumpHeld,GroundAccel,AirAccel,GroundDecel,BrakeSpeed,AirBrakeSpeed,AirDecel,RollingDecel,Gravity
+Default (S/S),60,16,16,3,1.66,0.076,0.05,0.031,-0.06,-0.18,-0.17,-0.028,-0.008,0.08
+Default (T/E),16,16,16,1,2.6,0.19,0.1,0.031,-0.1,-0.18,-0.17,-0.028,-0.014,0.2
+Default (K/R),60,16,16,2.5,1.66,0.076,0.05,0.031,-0.06,-0.18,-0.17,-0.028,-0.008,0.08
+No Friction,60,16,16,3,1.66,0.076,0.05,0.031,0,0,0,0,0,0.08
+Inverted,60,16,16,3,1.66,0.076,-0.05,-0.031,-0.06,-0.18,-0.17,-0.028,-0.008,0.08
