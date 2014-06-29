@@ -1,5 +1,11 @@
 -- objkeys.lua is an "Artifact Title". This file now contains most (if not all) of the code for Live Edit Mode.
-OMKHelpText = [[Object Manipulation Keys:
+OMKHelpDlgText = [[Gamepad controls:
+Press DOWN to activate cursor
+Hold LEFT to move selected object
+Hold UP to rotate selected object
+Hold RIGHT for object-specific action
+
+Legacy keyboard controls:
 
 A/D - Move on X axis
 R/F - Move on Y axis
@@ -69,7 +75,7 @@ function UpdateObjectSelCube()
 end
 
 function ObjManipKeysHelpClick(sender)
-	messageDialog(OMKHelpText, mtInformation, mbOK)
+	messageDialog(OMKHelpDlgText, mtInformation, mbOK)
 end
 
 function OMKKeyHandler(sender)
