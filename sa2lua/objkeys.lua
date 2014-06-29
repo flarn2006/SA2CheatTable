@@ -480,6 +480,7 @@ function OMKDrawWall(obj, color, prefix)
 	DrawLine3D(prefix.."arrow1", obj.px, obj.py, obj.pz, obj.px, obj.py, obj.pz + 30, color, true)
 	DrawLine3D(prefix.."arrow2", obj.px, obj.py, obj.pz + 30, obj.px, obj.py + 5, obj.pz + 25, color, true)
 	DrawLine3D(prefix.."arrow3", obj.px, obj.py, obj.pz + 30, obj.px, obj.py - 5, obj.pz + 25, color, true)
+	LDResetRotation()
 end
 
 function OMKDrawScaleAsDestination(obj, color, prefix)
