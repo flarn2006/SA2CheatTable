@@ -67,6 +67,8 @@ end
 
 function tonumber_new(str)
 	local n = tonumber_original(str)
+	if n == nil then return nil end
+	if type(n) == "number" then return n end
 	if n > 0 then
 		if str:sub(1, 1) == "-" then
 			return -n

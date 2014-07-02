@@ -448,7 +448,7 @@ function OMKAppendObjDescription()
 end
 
 function OMKDrawCube(obj, color, prefix)
-	LDRotateY = obj.ry
+	LDRotateY = -obj.ry
 	LDRotateCtrX = obj.px
 	LDRotateCtrY = obj.py
 	LDRotateCtrZ = obj.pz
@@ -471,7 +471,10 @@ function OMKDrawCylinder(obj, color, prefix)
 end
 
 function OMKDrawWall(obj, color, prefix)
+	local temp = obj.sz
+	obj.sz = 0
 	OMKDrawCube(obj, color, prefix)
+	obj.sz = temp
 	LDRotateY = obj.ry
 	LDRotateCtrX = obj.px
 	LDRotateCtrY = obj.py
@@ -491,7 +494,7 @@ function OMKDrawScaleAsDestination(obj, color, prefix)
 end
 
 function OMKDrawSphereGravSw(obj, color, prefix)
-	if objaddr == obj.address then
+	if objaddr == obj.address then --only draw if selected; drawing too many can cause lag in script
 		local multiplier = 1/4
 		DrawCircle3D(prefix.."1", obj.px, obj.py, obj.pz, obj.sx * multiplier, 25, color, true)
 		LDRotateCtrX = obj.px
@@ -502,6 +505,25 @@ function OMKDrawSphereGravSw(obj, color, prefix)
 		LDRotateZ = 0
 		LDRotateX = 0x4000
 		DrawCircle3D(prefix.."3", obj.px, obj.py, obj.pz, obj.sx * multiplier, 25, color, true)
+		LDResetRotation()
+	end
+end
+
+function OMKDrawSpringArrow(obj, color, prefix)
+	if objaddr == obj.address or OMKDrawAllSpringArrows then
+		local y2 = obj.py + 40 * obj.sy + 120
+		local size = 10
+		LDRotateCtrX = obj.px
+		LDRotateCtrY = obj.py
+		LDRotateCtrZ = obj.pz
+		LDRotateX = obj.rx
+		LDRotateY = obj.ry
+		LDRotateZ = obj.rz
+		DrawLine3D(prefix.."1", obj.px, obj.py, obj.pz, obj.px, y2, obj.pz, color, true)
+		DrawLine3D(prefix.."2", obj.px, y2, obj.pz, obj.px - size, y2 - size, obj.pz, color, true)
+		DrawLine3D(prefix.."3", obj.px, y2, obj.pz, obj.px + size, y2 - size, obj.pz, color, true)
+		DrawLine3D(prefix.."4", obj.px, y2, obj.pz, obj.px, y2 - size, obj.pz - size, color, true)
+		DrawLine3D(prefix.."5", obj.px, y2, obj.pz, obj.px, y2 - size, obj.pz + size, color, true)
 		LDResetRotation()
 	end
 end
@@ -556,6 +578,21 @@ Use triggers to set Y scale]]
 	end
 end
 
+function OMKSMHSetSpringStrength(request, dX, dY, dZ, dXr, dZr)
+	if request == "getHelpText" then
+		return [[
+SETTING SPRING STRENGTH
+Use triggers to set strength]]
+
+	elseif request == "handleState" then
+		local speedMult = 1/256
+		selObj.sy = selObj.sy + dY * speedMult
+		UpdateObjFromData(selObj)
+	else
+		return nil
+	end
+end
+
 OMKDrawHandlers = {}
 OMKDrawHandlers[0x6E54E0] = OMKDrawCube --CCUBE
 OMKDrawHandlers[0x6E6FC0] = OMKDrawCube --LINKLINK
@@ -565,6 +602,9 @@ OMKDrawHandlers[0x6D50F0] = OMKDrawScaleAsDestination --ROCKET
 OMKDrawHandlers[0x640DB0] = OMKDrawScaleAsDestination --WARP (paintings in Death Chamber, etc.)
 OMKDrawHandlers[0x6542F0] = OMKDrawSphereGravSw --GRAV_SW
 OMKDrawHandlers[0x5AE140] = OMKDrawCube --SCOL
+OMKDrawHandlers[0x6C4480] = OMKDrawSpringArrow --SPRA
+OMKDrawHandlers[0x6C4E90] = OMKDrawSpringArrow --SPRB
+OMKDrawHandlers[0x6D9310] = OMKDrawSpringArrow --3SPRING
 
 OMKSpecialModeHandlers = {}
 OMKSpecialModeHandlers[0x6D50F0] = OMKSMHSetScaleLikePosition --ROCKET
@@ -574,6 +614,9 @@ OMKSpecialModeHandlers[0x6E6FC0] = OMKSMHSetScaleNormally --LINKLINK
 OMKSpecialModeHandlers[0x6E5470] = OMKSMHSetScaleNormally --CCYL
 OMKSpecialModeHandlers[0x6E5550] = OMKSMHSetScaleNormally --CWALL
 OMKSpecialModeHandlers[0x5AE140] = OMKSMHSetScaleNormally --SCOL
+OMKSpecialModeHandlers[0x6C4480] = OMKSMHSetSpringStrength --SPRA
+OMKSpecialModeHandlers[0x6C4E90] = OMKSMHSetSpringStrength --SPRB
+OMKSpecialModeHandlers[0x6D9310] = OMKSMHSetSpringStrength --3SPRING
 
 OMKSelBoxRadiusOverride = {}
 OMKSelBoxRadiusOverride[0x6E54E0] = 3
@@ -587,4 +630,5 @@ OMKCursorX = 0
 OMKCursorY = 0
 OMKCursorZ = 0
 OMKHelpText = ""
+OMKDrawAllSpringArrows = true
 SelectionBoxColor = 0xFF00FF00 --ldcGreen might not be defined yet
