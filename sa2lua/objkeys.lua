@@ -218,7 +218,8 @@ Use triggers to move vertically]]
 				OMKHelpText = [[- LIVE EDIT MODE -
 ROTATING SELECTION
 Use right analog stick to rotate around X/Z
-Use triggers to rotate around Y]]
+Use triggers to rotate around Y
+Press Y to set all angles to zero]]
 				OMKAppendObjDescription()
 				SelectionBoxColor = ldcMagenta
 				writeBytes(0x174AFFE, 0)
@@ -235,6 +236,12 @@ Use triggers to rotate around Y]]
 				writeInteger(GetObjData1(objaddr, 0x08), objx)
 				writeInteger(GetObjData1(objaddr, 0x0C), objy)
 				writeInteger(GetObjData1(objaddr, 0x10), objz)
+				if controller.y then
+					selObj.rx = 0
+					selObj.ry = 0
+					selObj.rz = 0
+					UpdateObjFromData(selObj)
+				end
 			elseif controller.right and not OMKCursorMode then --special mode
 				local Handler = OMKSpecialModeHandlers[selObj.routine]
 				if Handler ~= nil then
@@ -270,6 +277,7 @@ Use triggers to rotate around Y]]
 CURSOR MODE
 Use right analog stick to move cursor horizontally
 Use triggers to move cursor vertically
+Press X to copy selected object for placement (may not work or crash for some objects)
 Press Y to center cursor on selected object
 Press LEFT to place object: ]]..control_getCaption(SpawnObjectDlg_ObjectName)..[[
 
@@ -313,6 +321,19 @@ Z = ]]..tostring(OMKCursorZ)
 			
 			if controller.left and controller.edge.left then
 				SpawnObjectClick(SpawnObjectDlg_SpawnObject) --simulate button press
+			end
+			
+			if controller.x and controller.edge.x then
+				SpawnObjectDlg_MainRoutine:setCaption(num2hex(selObj.routine))
+				SpawnObjectDlg_Flags:setCaption("F")
+				SpawnObjectDlg_ListID:setCaption(num2hex(selObj.list))
+				SpawnObjectDlg_ObjectName:setCaption(selObj.name or "???")
+				SpawnObjectDlg_RotX:setCaption(tostring(selObj.rx))
+				SpawnObjectDlg_RotY:setCaption(tostring(selObj.ry))
+				SpawnObjectDlg_RotZ:setCaption(tostring(selObj.rz))
+				SpawnObjectDlg_SclX:setCaption(tostring(selObj.sx))
+				SpawnObjectDlg_SclY:setCaption(tostring(selObj.sy))
+				SpawnObjectDlg_SclZ:setCaption(tostring(selObj.sz))
 			end
 			
 			if controller.y and controller.edge.y then
@@ -528,6 +549,24 @@ function OMKDrawSpringArrow(obj, color, prefix)
 	end
 end
 
+function OMKDrawGravTrigger(obj, color, prefix)
+	LDRotateCtrX = obj.px
+	LDRotateCtrY = obj.py
+	LDRotateCtrZ = obj.pz
+	LDRotateX = obj.rx
+	LDRotateY = obj.ry
+	LDRotateZ = obj.rz
+	local arrowLength = 32
+	local arrowHeadSize = 4
+	local y2 = obj.py - arrowLength + arrowHeadSize
+	DrawLine3D(prefix.."1", obj.px, obj.py, obj.pz, obj.px, obj.py - arrowLength, obj.pz, color, true)
+	DrawLine3D(prefix.."2", obj.px, obj.py - arrowLength, obj.pz, obj.px - arrowHeadSize, y2, obj.pz, color, true)
+	DrawLine3D(prefix.."3", obj.px, obj.py - arrowLength, obj.pz, obj.px + arrowHeadSize, y2, obj.pz, color, true)
+	DrawLine3D(prefix.."4", obj.px, obj.py - arrowLength, obj.pz, obj.px, y2, obj.pz - arrowHeadSize, color, true)
+	DrawLine3D(prefix.."5", obj.px, obj.py - arrowLength, obj.pz, obj.px, y2, obj.pz + arrowHeadSize, color, true)
+	LDResetRotation()
+end
+
 function OMKSMHSetScaleLikePosition(request, dX, dY, dZ, dXr, dZr)
 	-- Special mode handler that enables setting scale values in the same way as moving the object.
 	-- Most useful if an object's scale values refer to a location on the map. (like rockets, etc.)
@@ -605,6 +644,7 @@ OMKDrawHandlers[0x5AE140] = OMKDrawCube --SCOL
 OMKDrawHandlers[0x6C4480] = OMKDrawSpringArrow --SPRA
 OMKDrawHandlers[0x6C4E90] = OMKDrawSpringArrow --SPRB
 OMKDrawHandlers[0x6D9310] = OMKDrawSpringArrow --3SPRING
+OMKDrawHandlers[0x776730] = OMKDrawGravTrigger --SWDRNGC
 
 OMKSpecialModeHandlers = {}
 OMKSpecialModeHandlers[0x6D50F0] = OMKSMHSetScaleLikePosition --ROCKET
@@ -622,6 +662,7 @@ OMKSelBoxRadiusOverride = {}
 OMKSelBoxRadiusOverride[0x6E54E0] = 3
 OMKSelBoxRadiusOverride[0x6E6FC0] = 3
 OMKSelBoxRadiusOverride[0x6E5550] = 3
+OMKSelBoxRadiusOverride[0x776730] = 3
 
 OMKActive = false
 OMKCursorMode = false

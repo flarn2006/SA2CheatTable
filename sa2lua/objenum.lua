@@ -93,7 +93,7 @@ function UpdateObjectListRecords()
 	for i=0,6 do
 		allObjects[i] = EnumerateObjects(i) or {}
 	end
-	selObj = GenerateObjData(objaddr)
+	selObj = GenerateObjData(objaddr, 2)
 end
 
 allObjects = {}

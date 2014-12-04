@@ -5,4 +5,11 @@ the player; therefore you must spawn switches by
 replacing an existing object (such as a movable cylinder)
 or duplicating a switch using the keyboard controls.
 
+X Scale = switch behavior
+
+0 - toggle on/off
+1 - momentary push (left over from SA1; kind of weird in SA2)
+2 - timer switch (Z Scale controls delay, 30 units = 1 second)
+3 - push once, stays on
+
 Y Scale = switch ID

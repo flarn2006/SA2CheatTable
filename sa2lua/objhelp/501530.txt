@@ -1,0 +1,14 @@
+This is a GUN Beetle (floating) robot.
+
+Z rotation = frequency of "hovering"
+
+X scale = type of robot
+
+0 - Basic
+1 - Basic (moves slowly)
+2 - Electric (Y scale controls shield drop time)
+3 - Electric (moves slowly when shield is down)
+4 - Gun
+5 - Cloaked (appears when you get close)
+6 - Spring
+7 - Bomb (Y scale controls delay between bombs)

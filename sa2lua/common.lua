@@ -46,30 +46,6 @@ function LoadBinaryFile(filename, address)
 	return length
 end
 
---[[function AllocateString(str)
-	local len = string.len(str)
-	local allocNew = false
-	local str_addr = nil
-	if str_alloc_addr == nil then
-		allocNew = true
-	else
-		-- check if we have enough memory allocated
-		for i=0,len do -- remember the \0 at the end...that's why it's not len-1
-			if readBytes(str_alloc_addr+i, 1, false) == nil then
-				allocNew = true
-				break
-			end
-		end
-	end
-	if allocNew then str_alloc_addr = allocateSharedMemory("AllocateString", 4096) end
-	str_addr = str_alloc_addr
-	writeString(str_addr, str)
-	writeBytes(str_addr + len, 0)
-	str_alloc_addr = str_addr + len + 1
-	fullAccess(str_addr, len + 1) -- couldn't hurt, just in case
-	return str_addr
-end]]
-
 function alloc(size, name)
 	if name == nil then name = "luatemp" end
 	autoAssemble([[
@@ -79,13 +55,24 @@ registersymbol(]]..name..[[)
 	return getAddress("luatemp")
 end 
 
-function AllocateString(str)
+--[[function AllocateString(str)
 	local addr = allocateSharedMemory("String:"..str, string.len(str) + 1)
 	writeString(addr, str)
 	--print("Wrote \""..str.."\" to 0x"..num2hex(addr))
 	return addr
-end
+end]]
 
+function AllocateString(str)
+	local bytesNeeded = string.len(str) + 1
+	if bytesNeeded > str_alloc_bytesLeft or readInteger(str_alloc_addr) == nil then
+		str_alloc_reset()
+	end
+	str_alloc_bytesLeft = str_alloc_bytesLeft - bytesNeeded
+	writeString(str_alloc_addr, str)
+	str_alloc_addr = str_alloc_addr + bytesNeeded
+	return str_alloc_addr - bytesNeeded
+end
+	
 function string:split(delimiter)
 	-- This function was written by krsk9999 on Stack Overflow
 	-- http://stackoverflow.com/questions/1426954/split-string-in-lua
@@ -202,8 +189,16 @@ if getCEVersion() < 6.3 then
 	end
 end
 
-BreakpointCallbackTbl = {[0x47BD30] = LTHHookTriggered}
-str_alloc_addr = nil
+function str_alloc_reset()
+	str_alloc_bytesLeft = 0x10000
+	str_alloc_addr = allocateSharedMemory("AllocateString", str_alloc_bytesLeft)
+end
+
+str_alloc_reset()
+
+if BreakpointCallbackTbl == nil then BreakpointCallbackTbl = {} end
+str_alloc_bytesLeft = 0x10000
+str_alloc_addr = allocateSharedMemory("AllocateString", str_alloc_bytesLeft)
 controller = {}
 
 dofile("sa2lua/objenum.lua")

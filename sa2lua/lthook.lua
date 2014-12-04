@@ -37,11 +37,11 @@ function LTHHookTriggered()
 			local count = readWord(ltaddr)
 			local pcol = readInteger(ltaddr + 0x10)
 			for i=0,count-1 do
-				local addr = pcol + 0x20*i + 0x1C
+				local addr = pcol + 0x20*i
 				local val = readInteger(addr)
 				if val ~= nil then
 					val = Bitwise.bw_and(val, 0xFFFFFFFE)
-					writeInteger(addr, val)
+					writeInteger(addr + 0x1C, val)
 				end
 			end
 		end
@@ -64,5 +64,7 @@ end
 LTHHookEnabled = false
 LTHReplaceTexFile = false
 LTHMakeNonSolid = false
-LTHReplaceModel = false
+LTHReplaceModel = false --don't remember what this is; I imagine it didn't work or I wouldn't have removed it
 LTHPause = false
+
+BreakpointCallbackTbl[0x47BD30] = LTHHookTriggered

@@ -91,15 +91,13 @@ function CallClick(sender)
 		local addr = hookcmd + 0x24 + 4*(i-1)
 		WriteStackValue(addr, v)
 	end
-	local msg = "Return value (EAX) will be shown when available.\n"
-	msg = msg.."If you call another function, this one will not be called.\n"
-	msg = msg.."Call another function anyway?\n"
-	msg = msg.."Click Ignore to not call another function or show return value."
-	local result = messageDialog(msg, mtQuestion, mbYes, mbNo, mbIgnore)
-	if result ~= mrYes then
+	local msg = "Some functions place a return value in register EAX.\n"
+	msg = msg .. "Would you like this value to be shown when available?"
+	local result = messageDialog(msg, mtQuestion, mbYes, mbNo, mbCancel)
+	if result ~= mrCancel then
 		form_close(CallFunc)
 	end
-	if result == mrNo then
+	if result == mrYes then
 		fc_show_retval = true
 	end
 end
