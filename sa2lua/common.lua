@@ -146,6 +146,7 @@ function UpdateTimer(sender)
 	HandleControllerState()
 	OMKDrawObjects()
 	UpdateLineList()
+	InfoDispUpdate()
 	LDLineListTemp = {}
 end
 

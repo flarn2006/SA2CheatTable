@@ -33,6 +33,9 @@ dofile("sa2lua/objkeys.lua")
 -- Physics Presets dialog
 dofile("sa2lua/physpresets.lua")
 
+-- Info Display
+dofile("sa2lua/infodisp.lua")
+
 -- Initialization
 
 timer_setEnabled(ObjectChain_Update, true)
